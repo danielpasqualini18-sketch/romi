@@ -1,0 +1,15 @@
+node_modules/
+.wrangler/
+.dev.vars*
+.env*
+!.env.example
+wrangler.jsonc
+wrangler.json
+wrangler.toml
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+backups/
+exports/
+.DS_Store

@@ -1,0 +1,22 @@
+{
+  "name": "romi-baby-tracker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "test": "node --test tests/*.test.js",
+    "deploy": "wrangler deploy",
+    "setup": "node scripts/setup.mjs",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "build:check": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "version": "0.1.0",
+  "description": "Romi - The baby tracker. A private, self-hosted baby tracker.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  }
+}
