@@ -128,3 +128,8 @@ test('calendar totals and date-only growth use the configured timezone',async()=
  const w=weightWeek([make('weight','2025-07-10T01:00:00Z',{value:4000,date_only:1}),make('weight','2025-07-16T01:00:00Z',{value:4120,date_only:1})],Date.parse('2025-07-17T00:00:00Z'),'America/New_York');
  assert.equal(w.coveredDays,6);assert.equal(w.gramsPerDay,20);
 });
+
+test('heavy wet nappies exclude light, medium and unrecorded wetness',()=>{
+ const rows=['small','small','medium','medium','heavy',''].map(wet_size=>make('nappy',undefined,{wet:1,wet_size}));
+ const t=totals(rows);assert.equal(t.wet,6);assert.equal(t.wetHeavy,1);assert.equal(t.wetSmall,2);assert.equal(t.wetMedium,2);assert.equal(t.wetUnspecified,1);
+});

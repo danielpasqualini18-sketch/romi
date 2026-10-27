@@ -9,11 +9,11 @@ export function validate(e,timeZone='UTC') {
  if (e.type === 'weight' && !(value > 0)) throw Error('Enter weight in grams');
  if (!['','formula','ebm'].includes(e.milk || '')) throw Error('Invalid milk type');
  if (!['','small','medium','heavy'].includes(e.wet_size || '')) throw Error('Invalid wet nappy size');
- if (!['','small','big'].includes(e.poo_size || '')) throw Error('Invalid poo size');
- if (e.type==='vomit' && !['small','big'].includes(e.vomit_size)) throw Error('Choose small or big vomit');
+ if (!['','small','big'].includes(e.poo_size || '')) throw Error('Invalid stool size');
+ if (e.type==='vomit' && !['small','big'].includes(e.vomit_size)) throw Error('Choose small or large spit-up');
  if (typeof e.notes !== 'string' || e.notes.length > 2000) throw Error('Notes must be under 2,000 characters');
  if (!['','left','right','both','comfort'].includes(e.side || '')) throw Error('Invalid breast side');
- if (e.type==='nappy' && !e.wet && !e.poo) throw Error('Choose wet, poo or both');
+ if (e.type==='nappy' && !e.wet && !e.poo) throw Error('Choose wet, dirty or both');
  const durations={};
  for(const key of ['duration_seconds','left_seconds','right_seconds']){const n=e[key]==null||e[key]===''?null:Number(e[key]);if(n!==null&&(!Number.isInteger(n)||n<0||n>86400))throw Error('Duration must be between 0 and 1,440 minutes.');durations[key]=e.type==='breast'?n:null;}
  if(durations.duration_seconds===null&&(durations.left_seconds!==null||durations.right_seconds!==null))throw Error('Enter the total duration.');

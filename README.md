@@ -13,11 +13,11 @@ per family, and let caregivers sign in with an email code.
   pause/resume, side switching and review before saving.
 - Bottles: expressed breast milk or formula, with ml offered.
 - Pumping: expressed quantity in ml.
-- Nappies: wet small / medium / heavy, poo small / big, or both in one change.
-- Vomit: small / big.
+- Nappies: wet light / medium / heavy, dirty small / large, or both in one change.
+- Spit-up: small / large.
 - Weight in grams, including date-only measurements, and notes.
 
-The dashboard shows rolling 24-hour totals, seven-day daily averages (vomit stays a
+The dashboard shows rolling 24-hour totals, seven-day daily averages (spit-up stays a
 seven-day total), the latest weight and observed seven-day average gain in g/day.
 There is an editable timeline, weight chart, caregiver summary, JSON backup/restore
 and CSV export. The interface is designed for phone-sized screens and can be added
@@ -219,7 +219,7 @@ hosting is an explicit action by each installation's owner.
 - Rolling recap windows are `(start, end]`. Sessions and their full duration belong
   to the window containing their start timestamp; sessions are not split at midnight
   or at recap boundaries. Seven-day daily averages divide by seven, even with fewer
-  days of logging. Missing activity is not estimated. Vomit uses the seven-day total.
+  days of logging. Missing activity is not estimated. Spit-up uses the seven-day total.
 - Weight gain is the change between the first and latest readings within the seven
   days ending at the latest recorded weigh-in, divided by their actual gap. The UI
   shows covered days; a partial week is not extrapolated. It needs two distinct
@@ -235,8 +235,12 @@ hosting is an explicit action by each installation's owner.
   the form open. A running timer keeps accruing time while offline until a successful
   server action; correct the duration at review if needed. There are no reminders,
   notifications, feed-duration limits or offline write queue.
-- New bottles require type and ml; new nappies require selected sizes. Old/imported
-  unknown values are retained. Bottle volumes are offered, not necessarily retained.
+- New bottles require type and ml; new nappies require selected sizes. Heavy wet
+  nappies have their own prominent recap count; light, medium and unrecorded
+  wetness are not converted into heavy equivalents. Old/imported
+  unknown values are retained. Stored backup keys such as `vomit`, `small` and
+  `big` stay unchanged for compatibility; the UI displays Spit-up, Light (wetness)
+  and Large. Existing notes are not rewritten. Bottle volumes are offered, not necessarily retained.
 - JSON restore accepts up to 500 records per file/batch (maximum file size 2 MB).
   Matching IDs are skipped, not overwritten. Split larger backups into batches of at
   most 500 events. Export includes all active records, so a large export may require

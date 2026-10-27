@@ -1,5 +1,9 @@
 // Original, matching line icons. Labels remain visible; these drawings are decorative.
 const drawings={
+ refresh:'<path d="M26 13a10 10 0 1 0 0 7M26 5v8h-8"/>',
+ plus:'<path d="M16 7v18M7 16h18"/>',
+ copy:'<rect x="11" y="11" width="16" height="17" rx="2"/><path d="M21 11V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h5"/>',
+
  'timer-left':'<path d="M13 3h6m-3 0v4M8 9 6 7"/><circle cx="16" cy="18" r="10"/><path d="M16 12v6h-5"/>',
  'timer-right':'<path d="M13 3h6m-3 0v4m8 2 2-2"/><circle cx="16" cy="18" r="10"/><path d="M16 12v6h5"/>',
  breast:'<path d="M10 4c0 4-3 7-5 11-2 5 0 10 5 10 4 0 6-3 6-7 0 4 2 7 6 7 5 0 7-5 5-10-2-4-5-7-5-11"/><circle cx="10" cy="19" r="1"/><circle cx="22" cy="19" r="1"/>',
