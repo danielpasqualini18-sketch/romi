@@ -29,7 +29,7 @@ function recap(days,end){
  return `<article class="recap-column" aria-label="Last ${days===1?'24 hours':'7 days'}"><h3>${days===1?'24 hours':'7 days'}<small>${days===1?'Live totals':'Daily averages · spit-up total'}</small></h3>`+
   recapMetric('Breastfeeds',t.breast,t.timedBreast?`${minutes(t.breastSeconds)} min logged · ${t.timedBreast}/${t.breast} timed · avg ${minutes(t.breastSeconds/t.timedBreast)} min/feed`:'Duration unrecorded',avg(t.breast))+
   recapMetric('Bottle milk',`${t.unknownBottles?'≥ ':''}${t.bottleMl}`,milkBreakdown+milkUnknown,avg(t.bottleMl,' ml known'),'ml')+
-  recapMetric('Heavy wet nappies',t.wetHeavy,`${t.wet} wet nappies total · ${t.wetSmall} light · ${t.wetMedium} medium · ${t.wetHeavy} heavy${t.wetUnspecified?' · '+t.wetUnspecified+' size unrecorded':''}`,avg(t.wetHeavy))+
+  recapMetric('Wet nappies',t.wet,`${t.wetSmall} light · ${t.wetMedium} medium · ${t.wetHeavy} heavy${t.wetUnspecified?' · '+t.wetUnspecified+' size unrecorded':''}`,avg(t.wet))+
   recapMetric('Dirty nappies',t.poo,`${t.pooSmall} small · ${t.pooBig} large${t.pooUnspecified?' · '+t.pooUnspecified+' size unknown':''}`,avg(t.poo))+
   recapMetric('Milk expressed',`${t.unknownPumps?'≥ ':''}${t.pumpMl}`,`${t.pumps} sessions${t.unknownPumps?' · '+t.unknownPumps+' amount unknown':''}`,avg(t.pumpMl,' ml known'),'ml')+
   metric('Spit-up',t.vomit,`${t.vomitSmall} small · ${t.vomitBig} large`,days===7?'Total over 7 days':'')+

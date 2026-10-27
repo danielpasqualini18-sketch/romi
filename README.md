@@ -235,9 +235,9 @@ hosting is an explicit action by each installation's owner.
   the form open. A running timer keeps accruing time while offline until a successful
   server action; correct the duration at review if needed. There are no reminders,
   notifications, feed-duration limits or offline write queue.
-- New bottles require type and ml; new nappies require selected sizes. Heavy wet
-  nappies have their own prominent recap count; light, medium and unrecorded
-  wetness are not converted into heavy equivalents. Old/imported
+- New bottles require type and ml; new nappies require selected sizes. Wet nappy
+  recaps count all logged wet nappies, with the size breakdown shown separately.
+  The app does not calculate heavy-nappy equivalents. Old/imported
   unknown values are retained. Stored backup keys such as `vomit`, `small` and
   `big` stay unchanged for compatibility; the UI displays Spit-up, Light (wetness)
   and Large. Existing notes are not rewritten. Bottle volumes are offered, not necessarily retained.
