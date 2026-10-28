@@ -28,7 +28,7 @@
 
 #toast{opacity:1;transition:opacity .3s ease}#toast.toast-fading{opacity:0}@media(prefers-reduced-motion:reduce){#toast{transition:none}}
 
-.timer-last-breast{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 10px;margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;color:var(--sand);line-height:1.4;background:#d7ae810a}.timer-last-label{font-size:12px;color:var(--muted)}.timer-last-breast strong{font-size:24px;font-weight:700;line-height:1.2}.timer-last-time{margin-left:auto;font-size:13px;color:var(--cream)}@media(max-width:390px){.timer-last-breast{gap:4px 7px;padding:11px 12px}.timer-last-label{font-size:11px}.timer-last-breast strong{font-size:22px}.timer-last-time{font-size:12px}}
+.timer-last-breast{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:baseline;gap:5px 10px;margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;color:var(--sand);line-height:1.4;background:#d7ae810a}.timer-last-label{font-size:12px;color:var(--muted)}.timer-last-breast strong{text-align:center;font-size:24px;font-weight:700;line-height:1.2}.timer-last-time{justify-self:end;text-align:right;font-size:13px;color:var(--cream)}@media(max-width:390px){.timer-last-breast{gap:4px 7px;padding:11px 12px}.timer-last-label{font-size:11px}.timer-last-breast strong{font-size:22px}.timer-last-time{font-size:12px}}
 
 /* Interaction motion: no repeated effects on synced records or live timer ticks. */
 button,.file-button,.choices span{transition:background-color .32s ease,border-color .32s ease,color .32s ease,box-shadow .36s ease,transform .22s ease,opacity .3s ease}
