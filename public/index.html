@@ -54,7 +54,7 @@
  <div class="sheet-heading"><h2 id="editor-title">Log an entry</h2><button type="button" id="close" class="icon-button" aria-label="Close">✕</button></div>
  <div class="sheet-body">
   <div id="feed-mode" class="feed-mode" hidden><button type="button" data-feed-mode="timer">Time a feed</button><button type="button" data-feed-mode="manual">Log a feed</button></div>
-  <div id="timer-start-options" hidden><div class="timer-buttons"><button type="button" class="primary" data-start-feed="left"><span data-icon="timer-left" aria-hidden="true"></span>Start left</button><button type="button" class="primary" data-start-feed="right"><span data-icon="timer-right" aria-hidden="true"></span>Start right</button></div></div>
+  <div id="timer-start-options" hidden><p id="timer-last-breast" class="timer-last-breast" aria-live="polite"></p><div class="timer-buttons"><button type="button" class="primary" data-start-feed="left"><span data-icon="timer-left" aria-hidden="true"></span>Start left</button><button type="button" class="primary" data-start-feed="right"><span data-icon="timer-right" aria-hidden="true"></span>Start right</button></div></div>
   <div id="when-field" class="when-field"><label for="at" id="time-zone-label">When</label><div class="time-row"><input id="at" type="datetime-local" required><button type="button" id="now">Now</button></div></div>
   <fieldset id="date-only-field" class="choice-field"><legend>Weigh-in timing</legend><div class="choices checks"><label><input id="date-only" type="checkbox"><span>Exact time not recorded</span></label></div></fieldset>
   <fieldset id="side-field" class="choice-field"><legend>Which breast?</legend><input type="hidden" id="side"><div class="choices">

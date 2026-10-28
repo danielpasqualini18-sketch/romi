@@ -16,6 +16,11 @@ let draftId='',events=[],loaded=false,editing=null,type='breast',limit=60,filter
 function toast(text,duration=5000){const node=el('toast');node.textContent=text;node.style.display='block';node.classList.remove('toast-fading');clearTimeout(toastTimer);toastTimer=setTimeout(()=>{node.classList.add('toast-fading');toastTimer=setTimeout(()=>{node.style.display='none';node.classList.remove('toast-fading');},200);},duration);}
 async function api(path,method='GET',data,signal){const r=await fetch('/api/'+path,{method,signal,credentials:'same-origin',headers:method==='GET'?{}:{'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data)});if(!r.ok){let msg;try{msg=(await r.json()).error;}catch{msg=r.status===401?'Please sign in or configure private access.':'Could not reach the tracker.';}throw Error(msg||'Request failed');}return r.json();}
 async function refresh(signal){try{const [d,t,c]=await Promise.all([api('events','GET',undefined,signal),api('timer','GET',undefined,signal),api('config','GET',undefined,signal)]);config=c;applyConfiguration();events=d.events;feedTimer=t.timer;timerOffset=t.serverNow-Date.now();timerReady=true;loaded=true;el('connection').textContent='Shared · synced at '+time(Date.now());render();}catch(e){timerReady=false;renderTimer();el('connection').textContent=loaded?'Connection lost · showing previous records':'Not connected';if(!loaded)el('entries').innerHTML='<div class="empty">'+esc(e.message)+'</div>';throw e;}}
+function renderLastBreastReminder(){
+ const last=events.filter(e=>e.type==='breast'&&!e.deleted&&Date.parse(e.at)<=Date.now()).sort((a,b)=>b.at.localeCompare(a.at))[0];
+ const side=last?({left:'Left',right:'Right',both:'Both sides'}[last.side]||'Side not recorded'):'';
+ el('timer-last-breast').textContent=last?`Last breastfeed: ${side} · ${time(last.at)}, ${date(last.at)}`:'No breastfeeds recorded yet.';
+}
 function windowRows(days=1,end=Date.now()){return events.filter(e=>!e.deleted&&Date.parse(e.at)>end-days*86400000&&Date.parse(e.at)<=end);}
 const known=(n,unknown)=>`${unknown?'≥ ':''}${n} ml${unknown?' + '+unknown+' unknown':''}`;
 const signed=(n,digits=0)=>`${n>0?'+':''}${Number(n).toFixed(digits)}`;
@@ -42,7 +47,7 @@ function render(){
  el('recaps').innerHTML=recap(1,end)+recap(7,end);
  const last=events.filter(e=>e.type==='breast'&&Date.parse(e.at)<=end).sort((a,b)=>b.at.localeCompare(a.at))[0];
  el('lastfeed').textContent=last?`Last breastfeed · ${date(last.at)}, ${time(last.at)}${last.side?' · '+last.side:''}`:'No breastfeeds recorded';
- timeline();renderWeights();renderTimer();
+ timeline();renderWeights();renderTimer();renderLastBreastReminder();
  const days=daily(events,config.timeZone);el('daily').innerHTML=table(['Date','Breastfeeds','Bottle milk · ml','Wet nappies','Heavy wet nappies','Dirty nappies','Milk expressed · ml','Spit-ups'],days.map(d=>[d.day,d.breast,known(d.bottleMl,d.unknownBottles),d.wet,d.wetHeavy,d.poo,known(d.pumpMl,d.unknownPumps),d.vomit]));
 }
 function renderWeights(){
@@ -161,6 +166,7 @@ document.querySelectorAll('[data-icon]').forEach(node=>node.innerHTML=icon(node.
 document.querySelectorAll('[data-filter]').forEach(button=>{if(button.dataset.filter!=='all')button.insertAdjacentHTML('afterbegin',icon(button.dataset.filter));});
 
 function setFeedMode(mode){
+ renderLastBreastReminder();
  feedMode=mode;const timing=type==='breast'&&mode==='timer';
  el('timer-start-options').hidden=!timing;
  el('when-field').hidden=timing;el('side-field').hidden=type!=='breast'||timing;
