@@ -1,5 +1,5 @@
 // Manual refresh feedback only; background synchronisation remains unobtrusive.
-export function bindRefreshFeedback({button,dialog,refresh,notify,minimumMs=650,timeoutMs=15000}) {
+export function bindRefreshFeedback({button,dialog,refresh,notify,minimumMs=1800,timeoutMs=15000}) {
  let running=false;
  dialog.addEventListener('cancel',event=>event.preventDefault());
  button.addEventListener('click',async event=>{
