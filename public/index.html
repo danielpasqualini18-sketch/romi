@@ -85,5 +85,17 @@
 </dialog>
 <dialog id="import-dialog"><h2>A look back</h2><div id="import-details"></div><div class="form-actions"><button id="cancel-import">Cancel</button><button id="confirm-import" class="primary">Import records</button></div></dialog>
 <dialog id="copy-dialog"><h2>Nurse summary</h2><p>Copy the text below.</p><textarea id="copy-text" rows="15" readonly></textarea><button id="close-copy" class="full-button">Done</button></dialog>
+<dialog id="refresh-feedback" aria-label="Refreshing shared records" tabindex="-1">
+ <div class="refresh-feedback-content" role="status" aria-live="polite">
+  <svg class="refresh-bottle" viewBox="0 0 80 120" fill="none" aria-hidden="true" focusable="false">
+   <defs><clipPath id="refresh-milk-clip"><rect x="21" y="45" width="38" height="61" rx="8"/></clipPath></defs>
+   <g clip-path="url(#refresh-milk-clip)"><rect class="refresh-milk" x="19" y="46" width="42" height="62" fill="#d7ae81" opacity=".8"/></g>
+   <g stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 26v-8a8 8 0 0 1 16 0v8M25 27h30v12H25zM26 39v4c-5 3-9 8-9 15v43a10 10 0 0 0 10 10h26a10 10 0 0 0 10-10V58c0-7-4-12-9-15v-4M47 59h8M47 72h8M47 85h8"/>
+   </g>
+  </svg>
+  <p>Refreshing…</p><small>Syncing your shared records</small>
+ </div>
+</dialog>
 <div id="toast" role="status" aria-live="polite"></div><script type="module" src="/app.js"></script>
 </body></html>

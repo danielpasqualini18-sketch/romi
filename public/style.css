@@ -16,3 +16,12 @@
 #timer-start-options button{display:flex;align-items:center;justify-content:center;gap:9px}#timer-start-options .data-icon{width:25px;height:25px}
 
 .summary-copy{display:flex;align-items:center;justify-content:center;gap:8px}.summary-copy .data-icon{width:19px;height:19px}.weight-glance-card button,.section-title button[data-add="weight"]{display:inline-flex;align-items:center;justify-content:center;gap:6px}.weight-glance-card button .data-icon,.section-title button[data-add="weight"] .data-icon{width:20px;height:20px}
+
+/* Modal feedback for deliberate refreshes; never shown for background polling. */
+#refresh-feedback{position:fixed;inset:0;margin:auto;width:min(280px,calc(100vw - 48px));max-height:calc(100dvh - 48px);padding:28px 24px;border:1px solid var(--line);border-radius:24px;background:var(--ink,#1c1c1b);color:var(--sand);overflow:hidden;box-shadow:0 20px 80px #0005}
+#refresh-feedback::backdrop{background:#1c1c1b80;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.refresh-feedback-content{text-align:center}.refresh-bottle{display:block;width:72px;height:108px;margin:0 auto 14px}.refresh-feedback-content p{margin:0 0 6px;font-size:19px;font-weight:700}.refresh-feedback-content small{font-size:12px;color:var(--muted)}
+.refresh-milk{transform:translateY(58px);animation:fill-bottle 1.6s ease-in-out infinite;animation-play-state:paused}#refresh-feedback[open] .refresh-milk{animation-play-state:running}
+@keyframes fill-bottle{0%,100%{transform:translateY(58px)}65%,80%{transform:translateY(0)}}
+@media(hover:none){#refresh:hover{background:transparent;border-color:var(--line)}}
+@media(prefers-reduced-motion:reduce){.refresh-milk{animation:none;transform:translateY(22px)}}
