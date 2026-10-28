@@ -21,24 +21,24 @@
 #refresh-feedback{position:fixed;inset:0;margin:auto;width:min(280px,calc(100vw - 48px));max-height:calc(100dvh - 48px);padding:28px 24px;border:1px solid var(--line);border-radius:24px;background:var(--ink,#1c1c1b);color:var(--sand);overflow:hidden;box-shadow:0 20px 80px #0005}
 #refresh-feedback::backdrop{background:#1c1c1b80;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .refresh-feedback-content{text-align:center}.refresh-bottle{display:block;width:72px;height:108px;margin:0 auto 14px}.refresh-feedback-content p{margin:0 0 6px;font-size:19px;font-weight:700}.refresh-feedback-content small{font-size:12px;color:var(--muted)}
-.refresh-milk{transform:translateY(58px);}#refresh-feedback[open] .refresh-milk{animation:fill-bottle 1.6s ease-in-out forwards}
+.refresh-milk{transform:translateY(58px);}#refresh-feedback[open] .refresh-milk{animation:fill-bottle 2.4s ease-in-out forwards}
 @keyframes fill-bottle{from{transform:translateY(58px)}to{transform:translateY(0)}}
 @media(hover:none){#refresh:hover{background:transparent;border-color:var(--line)}}
 @media(prefers-reduced-motion:reduce){#refresh-feedback[open] .refresh-milk{animation:none;transform:translateY(0)}}
 
-#toast{opacity:1;transition:opacity .2s ease}#toast.toast-fading{opacity:0}@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+#toast{opacity:1;transition:opacity .3s ease}#toast.toast-fading{opacity:0}@media(prefers-reduced-motion:reduce){#toast{transition:none}}
 
 .timer-last-breast{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;color:var(--sand);font-size:14px;line-height:1.5;background:#d7ae810a}
 
 /* Interaction motion: no repeated effects on synced records or live timer ticks. */
-button,.file-button,.choices span{transition:background-color .16s ease,border-color .16s ease,color .16s ease,box-shadow .18s ease,transform .12s ease,opacity .15s ease}
+button,.file-button,.choices span{transition:background-color .32s ease,border-color .32s ease,color .32s ease,box-shadow .36s ease,transform .22s ease,opacity .3s ease}
 button:active,.file-button:active{transform:scale(.97)}.choices label:active span{transform:scale(.98)}
-input,textarea{transition:border-color .16s ease,box-shadow .16s ease}.tabs{scroll-margin-top:10px}.view{scroll-margin-top:76px}
-.tabs button,.filter-chips button{transition:background-color .16s ease,border-color .18s ease,color .16s ease,transform .12s ease}
-summary::before{transition:transform .18s ease}details[open] summary::before{transform:rotate(180deg)}
-dialog[data-closing]{pointer-events:none}dialog[open]::backdrop{animation:backdrop-in .22s ease both}dialog[data-closing]::backdrop{animation:backdrop-out .16s ease both}
-#refresh-feedback[open]{animation:refresh-card-in .2s ease both}
+input,textarea{transition:border-color .32s ease,box-shadow .32s ease}.tabs{scroll-margin-top:10px}.view{scroll-margin-top:76px}
+.tabs button,.filter-chips button{transition:background-color .32s ease,border-color .36s ease,color .32s ease,transform .22s ease}
+summary::before{transition:transform .36s ease}details[open] summary::before{transform:rotate(180deg)}
+dialog[data-closing]{pointer-events:none}dialog[open]::backdrop{animation:backdrop-in .52s ease both}dialog[data-closing]::backdrop{animation:backdrop-out .36s ease both}
+#refresh-feedback[open]{animation:refresh-card-in .42s ease both}
 @keyframes backdrop-in{from{opacity:0}to{opacity:1}}@keyframes backdrop-out{from{opacity:1}to{opacity:0}}
 @keyframes refresh-card-in{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-#toast:not(.toast-fading){animation:toast-in .2s ease both}@keyframes toast-in{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
+#toast:not(.toast-fading){animation:toast-in .32s ease both}@keyframes toast-in{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
 @media(prefers-reduced-motion:reduce){button,.file-button,.choices span,input,textarea,.tabs button,.filter-chips button,summary::before{transition:none}button:active,.file-button:active,.choices label:active span{transform:none}dialog[open]::backdrop,dialog[data-closing]::backdrop,#refresh-feedback[open],#toast:not(.toast-fading){animation:none}}

@@ -16,3 +16,15 @@ test('reduced motion closes immediately and navigation uses instant scrolling',a
   let options;scrollToSection({scrollIntoView:o=>options=o});assert.equal(options.behavior,'instant');
  }finally{globalThis.matchMedia=previous;}
 });
+test('gentle scrolling reaches its target and yields immediately to user input',()=>{
+ const keys=['window','document','requestAnimationFrame','cancelAnimationFrame'],prior=Object.fromEntries(keys.map(k=>[k,globalThis[k]]));
+ const frames=new Map();let id=0;const page=new EventTarget();page.scrollY=0;page.innerHeight=800;page.scrollTo=({top})=>page.scrollY=top;
+ try{
+  globalThis.window=page;globalThis.document={documentElement:{scrollHeight:3000}};
+  globalThis.requestAnimationFrame=f=>{frames.set(++id,f);return id;};globalThis.cancelAnimationFrame=i=>frames.delete(i);
+  const tick=time=>{const batch=[...frames];frames.clear();for(const [,f] of batch)f(time);};
+  const target={closest:()=>null,getBoundingClientRect:()=>({top:1000})};
+  scrollToSection(target);tick(0);tick(425);assert.ok(page.scrollY>0&&page.scrollY<990);tick(850);assert.equal(page.scrollY,990);assert.equal(frames.size,0);
+  page.scrollY=0;scrollToSection(target);tick(1000);page.dispatchEvent(new Event('wheel'));assert.equal(frames.size,0);assert.equal(page.scrollY,0);
+ }finally{for(const k of keys){if(prior[k]===undefined)delete globalThis[k];else globalThis[k]=prior[k];}}
+});
