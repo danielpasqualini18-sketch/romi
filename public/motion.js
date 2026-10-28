@@ -25,7 +25,7 @@ export function openDialog(dialog){
   {opacity:0,transform:`translateY(${travel}px)`,offset:0},
   {opacity:1,transform:`translateY(${travel*.08}px)`,offset:.72},
   {opacity:1,transform:'translateY(0)',offset:1}
- ],{duration:520});
+ ],{duration:1040});
  if(animation){const state={animation};active.set(dialog,state);animation.finished.catch(()=>{}).finally(()=>{if(active.get(dialog)===state)active.delete(dialog);});}
 }
 export async function closeDialog(dialog){
@@ -35,7 +35,7 @@ export async function closeDialog(dialog){
  dialog.setAttribute('data-closing','');
  const rect=dialog.getBoundingClientRect?.();
  const travel=rect&&globalThis.innerHeight?Math.max(120,globalThis.innerHeight-rect.top+24):180;
- const animation=play(dialog,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${travel}px)`}],{duration:360,fill:'forwards'});
+ const animation=play(dialog,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${travel}px)`}],{duration:720,fill:'forwards'});
  const state={animation,closing:true};active.set(dialog,state);
  state.promise=(async()=>{
   try{if(animation)await animation.finished;}catch{/* Interrupted by a new open. */}
