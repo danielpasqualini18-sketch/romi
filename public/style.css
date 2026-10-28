@@ -36,9 +36,11 @@ button:active,.file-button:active{transform:scale(.97)}.choices label:active spa
 input,textarea{transition:border-color .32s ease,box-shadow .32s ease}.tabs{scroll-margin-top:10px}.view{scroll-margin-top:76px}
 .tabs button,.filter-chips button{transition:background-color .32s ease,border-color .36s ease,color .32s ease,transform .22s ease}
 summary::before{transition:transform .36s ease}details[open] summary::before{transform:rotate(180deg)}
-dialog[data-closing]{pointer-events:none}dialog[open]::backdrop{animation:backdrop-in .52s ease both}dialog[data-closing]::backdrop{animation:backdrop-out .36s ease both}
+dialog[data-closing]{pointer-events:none}dialog[open]::backdrop{animation:backdrop-in .22s ease both}dialog[data-closing]::backdrop{animation:backdrop-out .2s ease both}
 #refresh-feedback[open]{animation:refresh-card-in .42s ease both}
-@keyframes backdrop-in{from{opacity:0}to{opacity:1}}@keyframes backdrop-out{from{opacity:1}to{opacity:0}}
+@keyframes backdrop-in{from{opacity:0;backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0)}to{opacity:1;backdrop-filter:blur(var(--backdrop-blur,4px));-webkit-backdrop-filter:blur(var(--backdrop-blur,4px))}}@keyframes backdrop-out{from{opacity:1}to{opacity:0}}
 @keyframes refresh-card-in{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 #toast:not(.toast-fading){animation:toast-in .32s ease both}@keyframes toast-in{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
 @media(prefers-reduced-motion:reduce){button,.file-button,.choices span,input,textarea,.tabs button,.filter-chips button,summary::before{transition:none}button:active,.file-button:active,.choices label:active span{transform:none}dialog[open]::backdrop,dialog[data-closing]::backdrop,#refresh-feedback[open],#toast:not(.toast-fading){animation:none}}
+
+#refresh-feedback{--backdrop-blur:6px}

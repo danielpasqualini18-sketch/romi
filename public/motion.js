@@ -19,7 +19,13 @@ export function openDialog(dialog){
  for(const details of dialog.querySelectorAll?.('details')||[]){const old=active.get(details);if(old?.expanding!==undefined){stop(details);details.style.overflow=old.overflow;}}
  stop(dialog);dialog.removeAttribute('data-closing');
  if(!dialog.open)dialog.showModal();
- const animation=play(dialog,[{opacity:0,transform:'translateY(22px) scale(.985)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:520});
+ const rect=dialog.getBoundingClientRect?.();
+ const travel=rect&&globalThis.innerHeight?Math.max(120,globalThis.innerHeight-rect.top+24):180;
+ const animation=play(dialog,[
+  {opacity:0,transform:`translateY(${travel}px)`,offset:0},
+  {opacity:1,transform:`translateY(${travel*.08}px)`,offset:.72},
+  {opacity:1,transform:'translateY(0)',offset:1}
+ ],{duration:520});
  if(animation){const state={animation};active.set(dialog,state);animation.finished.catch(()=>{}).finally(()=>{if(active.get(dialog)===state)active.delete(dialog);});}
 }
 export async function closeDialog(dialog){
@@ -27,7 +33,9 @@ export async function closeDialog(dialog){
  const pending=active.get(dialog);if(pending?.closing)return pending.promise;
  stop(dialog);
  dialog.setAttribute('data-closing','');
- const animation=play(dialog,[{opacity:1,transform:'translateY(0) scale(1)'},{opacity:0,transform:'translateY(16px) scale(.99)'}],{duration:360,fill:'forwards'});
+ const rect=dialog.getBoundingClientRect?.();
+ const travel=rect&&globalThis.innerHeight?Math.max(120,globalThis.innerHeight-rect.top+24):180;
+ const animation=play(dialog,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${travel}px)`}],{duration:360,fill:'forwards'});
  const state={animation,closing:true};active.set(dialog,state);
  state.promise=(async()=>{
   try{if(animation)await animation.finished;}catch{/* Interrupted by a new open. */}
