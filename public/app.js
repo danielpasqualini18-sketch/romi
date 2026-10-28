@@ -1,3 +1,4 @@
+import {feedWhen} from './feed-reminder.js';
 import {openDialog,closeDialog,reveal,scrollToSection,installMotion} from './motion.js';
 import {bindRefreshFeedback} from './refresh-ui.js';
 import {localDateTime,parseLocal} from './dates.js';
@@ -20,7 +21,7 @@ async function refresh(signal){try{const [d,t,c]=await Promise.all([api('events'
 function renderLastBreastReminder(){
  const last=events.filter(e=>e.type==='breast'&&!e.deleted&&Date.parse(e.at)<=Date.now()).sort((a,b)=>b.at.localeCompare(a.at))[0];
  const side=last?({left:'Left',right:'Right',both:'Both sides'}[last.side]||'Side not recorded'):'';
- el('timer-last-breast').textContent=last?`Last breastfeed: ${side} · ${time(last.at)}, ${date(last.at)}`:'No breastfeeds recorded yet.';
+ el('timer-last-breast').innerHTML=last?`<span class="timer-last-label">Last breastfeed</span><strong>${esc(side)}</strong><span class="timer-last-time">${esc(feedWhen(last.at,config.timeZone))}</span>`:'<strong>No feeds yet</strong><span class="timer-last-time">Your last breastfeed will appear here.</span>';
 }
 function windowRows(days=1,end=Date.now()){return events.filter(e=>!e.deleted&&Date.parse(e.at)>end-days*86400000&&Date.parse(e.at)<=end);}
 const known=(n,unknown)=>`${unknown?'≥ ':''}${n} ml${unknown?' + '+unknown+' unknown':''}`;

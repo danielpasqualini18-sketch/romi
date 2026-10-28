@@ -28,7 +28,7 @@
 
 #toast{opacity:1;transition:opacity .3s ease}#toast.toast-fading{opacity:0}@media(prefers-reduced-motion:reduce){#toast{transition:none}}
 
-.timer-last-breast{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;color:var(--sand);font-size:14px;line-height:1.5;background:#d7ae810a}
+.timer-last-breast{margin:0 0 18px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;color:var(--sand);line-height:1.4;background:#d7ae810a}.timer-last-label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}.timer-last-breast strong{display:block;font-size:28px;font-weight:700;line-height:1.2}.timer-last-time{display:block;font-size:15px;color:var(--cream);margin-top:7px}
 
 /* Interaction motion: no repeated effects on synced records or live timer ticks. */
 button,.file-button,.choices span{transition:background-color .32s ease,border-color .32s ease,color .32s ease,box-shadow .36s ease,transform .22s ease,opacity .3s ease}
