@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {openDialog,closeDialog,scrollToSection} from '../public/motion.js';
 function dialog(){
- const animations=[],attributes=new Set();return {open:false,animations,attributes,showModal(){this.open=true;},close(){this.open=false;},setAttribute:k=>attributes.add(k),removeAttribute:k=>attributes.delete(k),animate(){let resolve,reject;const finished=new Promise((a,b)=>{resolve=a;reject=b;});const animation={finished,finish:resolve,cancel:()=>reject(Error('cancelled'))};animations.push(animation);return animation;}};
+ const animations=[],attributes=new Set();return {open:false,animations,attributes,focus(){this.focused=true;},showModal(){this.open=true;},close(){this.open=false;},setAttribute:k=>attributes.add(k),removeAttribute:k=>attributes.delete(k),animate(){let resolve,reject;const finished=new Promise((a,b)=>{resolve=a;reject=b;});const animation={finished,finish:resolve,cancel:()=>reject(Error('cancelled'))};animations.push(animation);return animation;}};
 }
 test('dialog remains modal during exit and closes when the animation finishes',async()=>{
- const d=dialog();openDialog(d);assert.equal(d.open,true);const closing=closeDialog(d);assert.equal(d.open,true);assert.equal(d.attributes.has('data-closing'),true);d.animations.at(-1).finish();await closing;assert.equal(d.open,false);assert.equal(d.attributes.has('data-closing'),false);
+ const d=dialog();openDialog(d);assert.equal(d.open,true);assert.equal(d.focused,true);assert.equal(d.attributes.has('tabindex'),true);const closing=closeDialog(d);assert.equal(d.open,true);assert.equal(d.attributes.has('data-closing'),true);d.animations.at(-1).finish();await closing;assert.equal(d.open,false);assert.equal(d.attributes.has('data-closing'),false);
 });
 test('reopening during exit cancels the old close without closing the new dialog',async()=>{
  const d=dialog();openDialog(d);const closing=closeDialog(d);openDialog(d);await closing;assert.equal(d.open,true);assert.equal(d.attributes.has('data-closing'),false);d.animations.at(-1).finish();

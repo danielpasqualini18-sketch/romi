@@ -44,3 +44,6 @@ dialog[data-closing]{pointer-events:none}dialog[open]::backdrop{animation:backdr
 @media(prefers-reduced-motion:reduce){button,.file-button,.choices span,input,textarea,.tabs button,.filter-chips button,summary::before{transition:none}button:active,.file-button:active,.choices label:active span{transform:none}dialog[open]::backdrop,dialog[data-closing]::backdrop,#refresh-feedback[open],#toast:not(.toast-fading){animation:none}}
 
 #refresh-feedback{--backdrop-blur:6px}
+
+/* Start modal focus on its container, keeping controls visually neutral. */
+dialog:focus{outline:none}@media(hover:none){.icon-button:hover{background:transparent;border-color:var(--line)}}
