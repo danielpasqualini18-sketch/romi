@@ -2,6 +2,8 @@
 const active=new WeakMap();
 export const reducedMotion=()=>globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false;
 const easing='cubic-bezier(.2,.8,.2,1)';
+// Fixed CSS pixels per second: shorter journeys finish sooner at the same pace.
+const PANEL_SPEED=2400;
 function stop(node){const old=active.get(node);if(old){active.delete(node);old.animation?.cancel();}}
 function play(node,frames,options={}){
  if(!node?.animate||reducedMotion())return null;
@@ -27,7 +29,7 @@ export function openDialog(dialog){
   {opacity:0,transform:`translateY(${travel}px)`,offset:0},
   {opacity:1,transform:`translateY(${travel*.5}px)`,offset:.5},
   {opacity:1,transform:'translateY(0)',offset:1}
- ],{duration:612,easing:'linear'});
+ ],{duration:travel/PANEL_SPEED*1000,easing:'linear'});
  if(animation){const state={animation};active.set(dialog,state);animation.finished.catch(()=>{}).finally(()=>{if(active.get(dialog)===state)active.delete(dialog);});}
 }
 export async function closeDialog(dialog){
@@ -37,7 +39,7 @@ export async function closeDialog(dialog){
  dialog.setAttribute('data-closing','');
  const rect=dialog.getBoundingClientRect?.();
  const travel=rect&&globalThis.innerHeight?Math.max(120,globalThis.innerHeight-rect.top+24):180;
- const animation=play(dialog,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${travel}px)`}],{duration:424,easing:'linear',fill:'forwards'});
+ const animation=play(dialog,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${travel}px)`}],{duration:travel/PANEL_SPEED*1000,easing:'linear',fill:'forwards'});
  const state={animation,closing:true};active.set(dialog,state);
  state.promise=(async()=>{
   try{if(animation)await animation.finished;}catch{/* Interrupted by a new open. */}
