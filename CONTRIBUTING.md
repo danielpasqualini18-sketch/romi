@@ -18,5 +18,10 @@ checks, fail-closed authentication and backup compatibility. Schema upgrades sho
 preserve existing records. Never edit an already-released migration to change an
 existing deployment; add the next numbered migration instead.
 
-Code contributions are offered under this project's MIT licence. Font assets retain
-their own licences in public/fonts and THIRD_PARTY_NOTICES.md.
+By submitting a contribution for inclusion, you offer it under this project's
+PolyForm Noncommercial License 1.0.0. Only submit work you have permission to
+contribute under those terms. Noncommercial forks and improvements are welcome;
+include LICENSE and its Required Notice when sharing. This project is
+source-available, not OSI-approved open source. Earlier MIT grants are unaffected;
+see README.md. Font assets and other dependencies retain their own licences in
+public/fonts and THIRD_PARTY_NOTICES.md.

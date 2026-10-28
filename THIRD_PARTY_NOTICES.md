@@ -1,6 +1,9 @@
 # Third-party notices
 
-Application code and original SVG icons are covered by the MIT licence in LICENSE.
+Application code and original SVG icons are offered under PolyForm Noncommercial
+1.0.0 in LICENSE, effective with the licensing-change commit on 28 October 2026.
+Earlier MIT-licensed versions retain their original permissions; see README.md
+and LICENSES/MIT-previous.txt. This change does not relicense third-party assets.
 
 Bundled fonts retain their own SIL Open Font License 1.1 terms, including the
 copyright notices and any reserved font names in the corresponding licence files:

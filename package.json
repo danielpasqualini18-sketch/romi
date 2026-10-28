@@ -15,7 +15,7 @@
   },
   "version": "0.1.0",
   "description": "Romi - The baby tracker. A private, self-hosted baby tracker.",
-  "license": "MIT",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "engines": {
     "node": ">=24"
   }

@@ -1,8 +1,13 @@
 # Romi - The baby tracker
 
-A simple, private baby tracker for the beautiful, blurry days. Built with plain
+A free, source-available baby tracker for the beautiful, blurry days. Built with plain
 JavaScript, Cloudflare Workers and a shared D1 database. Self-host one installation
 per family, and let caregivers sign in with an email code.
+
+Free for families to use, modify and share for noncommercial purposes under
+[PolyForm Noncommercial 1.0.0](LICENSE). Commercial use is not permitted under
+this licence. This is source-available software, not OSI-approved open source.
+See the licensing history below for earlier MIT releases.
 
 **You do not need to buy a domain.** The standard setup uses Cloudflare's supplied
 `<worker>.<account-subdomain>.workers.dev` address. A custom domain is optional.
@@ -270,8 +275,21 @@ Issues and small pull requests are welcome. Use only fictional data in screensho
 fixtures and bug reports. Read [CONTRIBUTING.md](CONTRIBUTING.md) and
 [SECURITY.md](SECURITY.md) before sharing logs or security issues.
 
-Application code and original SVG icons: **MIT**. Fraunces and Atkinson Hyperlegible
-are bundled locally under **SIL OFL 1.1**, with original licence/copyright files.
+Application code and original SVG icons: **PolyForm Noncommercial 1.0.0**, effective
+28 October 2026, starting with the commit introducing this licence. You may use,
+modify and share the software for noncommercial purposes, including personal family
+self-hosting. Commercial use requires separate permission from the relevant rights
+holders. Preserve the licence and Required Notice when sharing. The full licence,
+including its permitted noncommercial-organisation uses, controls.
+
+Versions previously published under MIT retain their MIT permissions; this change
+does not revoke those grants or retrospectively restrict existing MIT copies. The
+last MIT-licensed public commit is `5df2edd6230476f028e327f909ec4d9dd241a15b`.
+The previous text is retained in [LICENSES/MIT-previous.txt](LICENSES/MIT-previous.txt)
+for those versions; it is not an alternative licence grant for later contributions.
+
+Fraunces and Atkinson Hyperlegible are bundled locally under **SIL OFL 1.1**, with
+original licence/copyright files.
 See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The charcoal, cream, sand and
 terracotta palette is retained.
 
