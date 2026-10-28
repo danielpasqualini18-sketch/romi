@@ -25,3 +25,5 @@
 @keyframes fill-bottle{0%,100%{transform:translateY(58px)}65%,80%{transform:translateY(0)}}
 @media(hover:none){#refresh:hover{background:transparent;border-color:var(--line)}}
 @media(prefers-reduced-motion:reduce){.refresh-milk{animation:none;transform:translateY(22px)}}
+
+#toast{opacity:1;transition:opacity .2s ease}#toast.toast-fading{opacity:0}@media(prefers-reduced-motion:reduce){#toast{transition:none}}
