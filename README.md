@@ -24,6 +24,8 @@ See the licensing history below for earlier MIT releases.
 
 The dashboard shows rolling 24-hour totals, seven-day daily averages (spit-up stays a
 seven-day total), the latest weight and observed seven-day average gain in g/day.
+Weight entries support reusable scale names, colour-coded chart points and a scale filter with its own seven-day average. Explicit `Scale: name` labels in older notes are recognised; other notes remain unchanged. Scale names are included in JSON and CSV backups.
+
 There is an editable timeline, weight chart, caregiver summary, JSON backup/restore
 and CSV export. The interface is designed for phone-sized screens and can be added
 to an iPhone home screen from Safari.

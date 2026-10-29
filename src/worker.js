@@ -30,7 +30,7 @@ export function configuration(env){
  return {babyName:env.BABY_NAME?.trim()||'Baby',timeZone};
 }
 function statement(db,e) {
- return db.prepare(`INSERT INTO events(id,at,type,value,side,wet,poo,notes,milk,wet_size,poo_size,vomit_size,date_only,duration_seconds,left_seconds,right_seconds) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING`).bind(e.id,e.at,e.type,e.value,e.side,e.wet,e.poo,e.notes,e.milk,e.wet_size,e.poo_size,e.vomit_size,e.date_only,e.duration_seconds,e.left_seconds,e.right_seconds);
+ return db.prepare(`INSERT INTO events(id,at,type,value,side,wet,poo,notes,milk,wet_size,poo_size,vomit_size,date_only,duration_seconds,left_seconds,right_seconds,scale) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING`).bind(e.id,e.at,e.type,e.value,e.side,e.wet,e.poo,e.notes,e.milk,e.wet_size,e.poo_size,e.vomit_size,e.date_only,e.duration_seconds,e.left_seconds,e.right_seconds,e.scale);
 }
 export async function handle(request,env) {
  if(!await authorized(request,env))return new Response('Private family tracker. Configure Cloudflare Access and sign in to continue.',{status:401});
@@ -58,8 +58,8 @@ export async function handle(request,env) {
     if(current.status!=='paused'||data.record?.id!==current.id)return json({error:'Pause the active feed before saving.'},409);
     const e=validate({...data.record,id:current.id,type:'breast'},config.timeZone);
     if(e.duration_seconds===null)throw Error('Review the feed duration before saving.');
-    const columns='id,at,type,value,side,wet,poo,notes,milk,wet_size,poo_size,vomit_size,date_only,duration_seconds,left_seconds,right_seconds';
-    const values=[e.id,e.at,e.type,e.value,e.side,e.wet,e.poo,e.notes,e.milk,e.wet_size,e.poo_size,e.vomit_size,e.date_only,e.duration_seconds,e.left_seconds,e.right_seconds];
+    const columns='id,at,type,value,side,wet,poo,notes,milk,wet_size,poo_size,vomit_size,date_only,duration_seconds,left_seconds,right_seconds,scale';
+    const values=[e.id,e.at,e.type,e.value,e.side,e.wet,e.poo,e.notes,e.milk,e.wet_size,e.poo_size,e.vomit_size,e.date_only,e.duration_seconds,e.left_seconds,e.right_seconds,e.scale];
     const result=await env.DB.batch([
      env.DB.prepare(`INSERT INTO events(${columns}) SELECT ${values.map(()=>'?').join(',')} FROM feed_timer WHERE singleton=1 AND revision=? ON CONFLICT(id) DO NOTHING`).bind(...values,current.revision),
      env.DB.prepare(`UPDATE feed_timer SET state='{"status":"idle"}',revision=revision+1 WHERE singleton=1 AND revision=? AND EXISTS(SELECT 1 FROM events WHERE id=?)`).bind(current.revision,e.id)
@@ -91,7 +91,7 @@ export async function handle(request,env) {
    const data=await request.json();if(!Number.isInteger(data.revision)||data.revision<1)return json({error:'Missing revision'},400);
    let result;
    if(request.method==='DELETE')result=await env.DB.prepare("UPDATE events SET deleted=1,revision=revision+1,updated_at=strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id=? AND revision=? AND deleted=0").bind(id,data.revision).run();
-   else {const e=validate({...data,id},config.timeZone);result=await env.DB.prepare("UPDATE events SET at=?,type=?,value=?,side=?,wet=?,poo=?,notes=?,milk=?,wet_size=?,poo_size=?,vomit_size=?,date_only=?,duration_seconds=?,left_seconds=?,right_seconds=?,revision=revision+1,updated_at=strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id=? AND revision=? AND deleted=0").bind(e.at,e.type,e.value,e.side,e.wet,e.poo,e.notes,e.milk,e.wet_size,e.poo_size,e.vomit_size,e.date_only,e.duration_seconds,e.left_seconds,e.right_seconds,id,data.revision).run();}
+   else {const e=validate({...data,id},config.timeZone);result=await env.DB.prepare("UPDATE events SET at=?,type=?,value=?,side=?,wet=?,poo=?,notes=?,milk=?,wet_size=?,poo_size=?,vomit_size=?,date_only=?,duration_seconds=?,left_seconds=?,right_seconds=?,scale=?,revision=revision+1,updated_at=strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id=? AND revision=? AND deleted=0").bind(e.at,e.type,e.value,e.side,e.wet,e.poo,e.notes,e.milk,e.wet_size,e.poo_size,e.vomit_size,e.date_only,e.duration_seconds,e.left_seconds,e.right_seconds,e.scale,id,data.revision).run();}
    return result.meta.changes?json({ok:true}):json({error:'This entry changed on another device. Refresh and try again.'},409);
   }
   return json({error:'Not found'},404);
