@@ -49,3 +49,5 @@ dialog[data-closing]{pointer-events:none}dialog[open]::backdrop{animation:backdr
 dialog:focus{outline:none}@media(hover:none){.icon-button:hover{background:transparent;border-color:var(--line)}}
 
 .scale-legend{display:flex;flex-wrap:wrap;gap:12px 18px;margin:8px 0 20px}.scale-legend span{display:flex;align-items:center;gap:7px;font-size:13px}#scale-field{margin:18px 0}#scale-field input{width:100%}#weight-scale-filter{margin:8px 0;max-width:100%}
+
+#weight-scale-filter{display:block;width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--charcoal,#1c1c1b);color:var(--cream);font:inherit}

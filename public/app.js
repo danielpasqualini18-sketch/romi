@@ -62,7 +62,7 @@ function renderWeights(){
  }
  const rate=week.gramsPerDay==null?'—':signed(week.gramsPerDay,1)+' g/day';
  el('weight-glance').innerHTML=`<div class="weight-glance-card"><div><h2>Latest weight · ${date(last.at)}</h2><strong>${last.value.toLocaleString('en-AU')} g</strong><p class="subtle">${week.gramsPerDay==null?'7-day average: more readings needed':'7-day average · all scales: '+rate}</p></div><button data-view="growth">View growth</button></div>`;
- const scaleRows=growthScale==='*'?events:events.filter(e=>scaleName(e)===growthScale);
+ const scaleRows=growthScale==='*'?events:events.filter(e=>scaleName(e).toLocaleLowerCase()===growthScale.toLocaleLowerCase());
  const comparison=weightWeek(scaleRows,Date.now(),config.timeZone);
  const names=scaleNames(events);el('weight-scale-filter').innerHTML='<option value="*">All scales</option><option value="">Scale not recorded</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');el('weight-scale-filter').value=growthScale;
  el('scale-comparison-note').textContent=growthScale==='*'?'All-scale average below. Different scales and clothing can affect comparisons. Choose one scale for its own 7-day average.':`${growthScale||'Scale not recorded'} · 7-day average: ${comparison.gramsPerDay==null?'more readings needed':signed(comparison.gramsPerDay,1)+' g/day'}`;
