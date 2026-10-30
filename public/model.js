@@ -7,6 +7,8 @@ export function validate(e,timeZone='UTC') {
  if (typeof e.at !== 'string' || !/^\d{4}-\d\d-\d\dT/.test(e.at) || !Number.isFinite(Date.parse(e.at))) throw Error('Choose a valid date and time');
  if (e.type==='weight'&&e.date_only?calendarDate(e.at,timeZone)>calendarDate(Date.now(),timeZone):Date.parse(e.at)>Date.now()+300000) throw Error('Time is in the future');
  if(e.scale!=null&&(typeof e.scale!=='string'||e.scale.trim().length>80))throw Error('Scale name must be under 80 characters');
+ let weight_context=e.weight_context||'';if(typeof weight_context!=='string')throw Error('Invalid weigh-in conditions');
+ if(weight_context){let c;try{c=JSON.parse(weight_context);}catch{throw Error('Invalid weigh-in conditions');}if(!['','naked','clothed'].includes(c.clothing||'')||!['weight','weighted-feed'].includes(c.mode)||c.mode==='weighted-feed'&&(!Number.isFinite(c.after)||c.after<=0||c.after>30000))throw Error('Check the weighted feed or clothing selection');weight_context=e.type==='weight'?JSON.stringify({mode:c.mode,clothing:c.clothing||'',...(c.mode==='weighted-feed'?{after:c.after}:{})}):'';}
  const value = e.value == null || e.value === '' ? null : Number(e.value);
  if (value !== null && (!Number.isFinite(value) || value < 0 || value > (e.type==='weight'?30000:2000))) throw Error('Check the amount');
  if (e.type === 'weight' && !(value > 0)) throw Error('Enter weight in grams');
@@ -21,7 +23,7 @@ export function validate(e,timeZone='UTC') {
  for(const key of ['duration_seconds','left_seconds','right_seconds']){const n=e[key]==null||e[key]===''?null:Number(e[key]);if(n!==null&&(!Number.isInteger(n)||n<0||n>86400))throw Error('Duration must be between 0 and 1,440 minutes.');durations[key]=e.type==='breast'?n:null;}
  if(durations.duration_seconds===null&&(durations.left_seconds!==null||durations.right_seconds!==null))throw Error('Enter the total duration.');
  if((durations.left_seconds||0)+(durations.right_seconds||0)>(durations.duration_seconds||0))throw Error('Left and right time cannot exceed the total.');
- return {...durations,scale:scaleName(e),id:e.id, at:new Date(e.at).toISOString(), type:e.type, value, side:e.side||'', wet:e.type==='nappy'&&e.wet?1:0, poo:e.type==='nappy'&&e.poo?1:0, notes:e.notes, date_only:e.type==='weight'&&e.date_only?1:0, vomit_size:e.type==='vomit'?e.vomit_size:'', milk:e.type==='bottle'?e.milk||'':'', wet_size:e.type==='nappy'&&e.wet?e.wet_size||'':'', poo_size:e.type==='nappy'&&e.poo?e.poo_size||'':'', revision:Number.isInteger(e.revision)&&e.revision>0?e.revision:0};
+ return {...durations,weight_context,scale:scaleName(e),id:e.id, at:new Date(e.at).toISOString(), type:e.type, value, side:e.side||'', wet:e.type==='nappy'&&e.wet?1:0, poo:e.type==='nappy'&&e.poo?1:0, notes:e.notes, date_only:e.type==='weight'&&e.date_only?1:0, vomit_size:e.type==='vomit'?e.vomit_size:'', milk:e.type==='bottle'?e.milk||'':'', wet_size:e.type==='nappy'&&e.wet?e.wet_size||'':'', poo_size:e.type==='nappy'&&e.poo?e.poo_size||'':'', revision:Number.isInteger(e.revision)&&e.revision>0?e.revision:0};
 }
 export function totals(events) {
  const t = {breastSeconds:0,timedBreast:0,breast:0,bottles:0,bottleMl:0,unknownBottles:0,pumps:0,pumpMl:0,unknownPumps:0,wet:0,poo:0,nappies:0,formulaMl:0,ebmMl:0,unspecifiedMl:0,wetSmall:0,wetMedium:0,wetHeavy:0,wetUnspecified:0,pooSmall:0,pooBig:0,pooUnspecified:0,vomit:0,vomitSmall:0,vomitBig:0};
@@ -57,7 +59,7 @@ export function periodTotals(events, days, end = Date.now()) {
 
 // Rates are calculated between consecutive recorded weigh-ins using elapsed time.
 export function weightTrend(events, end = Date.now(),timeZone='UTC') {
- const rows = events.filter(e => !e.deleted && e.type === 'weight' && Number(e.value) > 0 && Number.isFinite(Number(e.value)) && Number.isFinite(Date.parse(e.at)) && Date.parse(e.at) <= end)
+ const rows = events.filter(e => !e.deleted && e.type === 'weight' && !e.weight_context?.includes('weighted-feed') && Number(e.value) > 0 && Number.isFinite(Number(e.value)) && Number.isFinite(Date.parse(e.at)) && Date.parse(e.at) <= end)
   .sort((a,b) => Date.parse(a.at) - Date.parse(b.at) || a.id.localeCompare(b.id));
  return rows.map((row, index) => {
   const previous = rows[index - 1];

@@ -1,0 +1,1 @@
+ALTER TABLE events ADD COLUMN weight_context TEXT NOT NULL DEFAULT '';
