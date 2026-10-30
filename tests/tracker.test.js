@@ -59,7 +59,7 @@ test('7-day weight average needs two distinct observations inside the window',as
  const {weightWeek}=await import('../public/model.js');
  assert.equal(weightWeek([make('weight','2025-10-27T00:00:00Z',{value:4210})]).gramsPerDay,null);
  assert.equal(weightWeek([make('weight','2025-10-18T00:00:00Z',{value:4080}),make('weight','2025-10-27T00:00:00Z',{value:4210})]).gramsPerDay,null);
- const w=weightWeek([make('weight','2025-10-20T00:00:00Z',{value:4080}),make('weight','2025-10-27T00:00:00Z',{value:4210})]);assert.equal(w.coveredDays,7);assert.equal(w.gramsPerDay,130/7);
+ const w=weightWeek([make('weight','2025-10-21T00:00:00Z',{value:4080}),make('weight','2025-10-27T00:00:00Z',{value:4210})]);assert.equal(w.coveredDays,6);assert.equal(w.gramsPerDay,130/6);
 });
 
 test('timer tracks both sides, excludes pauses and survives long gaps without browser ticks',async()=>{

@@ -227,12 +227,7 @@ hosting is an explicit action by each installation's owner.
   to the window containing their start timestamp; sessions are not split at midnight
   or at recap boundaries. Seven-day daily averages divide by seven, even with fewer
   days of logging. Missing activity is not estimated. Spit-up uses the seven-day total.
-- Weight gain is the change between the first and latest readings within the seven
-  days ending at the latest recorded weigh-in, divided by their actual gap. The UI
-  shows covered days; a partial week is not extrapolated. It needs two distinct
-  readings in that window. Date-only readings use calendar days; their stored
-  midnight anchor is not an observed measurement time. Different scales/clothes can
-  affect results. The app does not interpret growth medically.
+- Weight trend is the slope through equally weighted daily mean weights over seven local calendar dates ending at the latest weigh-in. It requires two recorded dates; missing dates remain empty. Coverage and mixed-scale status are shown. Date-only timestamps are not observed weighing times. Different scales/clothes still affect results.
 - Feed timers persist server timestamps and exclude pauses. Closing/backgrounding
   the page does not stop a running timer. Finish pauses and opens a review; closing
   review leaves the timer paused. Review unexpectedly long feeds before saving.
@@ -303,3 +298,5 @@ terracotta palette is retained.
 - [D1 getting started](https://developers.cloudflare.com/d1/get-started/)
 - [Wrangler configuration](https://developers.cloudflare.com/workers/wrangler/configuration/)
 - [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
+
+Weight trend: all readings on each local calendar date are averaged. The slope of an equally weighted straight-line fit through those daily means gives g/day, over the seven dates ending at the latest weigh-in. Missing days are not filled. At least two recorded dates are required. Coverage and mixed-scale status are shown; averaging does not calibrate different scales.

@@ -1,3 +1,4 @@
+import {dailyWeightTrend} from './weight-trend.js';
 import {scaleName} from './scales.js';
 import {calendarDate} from './dates.js';
 export const TYPES = ['breast','bottle','pump','nappy','weight','note','vomit'];
@@ -68,18 +69,7 @@ export function weightTrend(events, end = Date.now(),timeZone='UTC') {
  });
 }
 
-// Average observed daily change from the first to last weigh-in in the trailing week.
-// The covered interval is returned so a partial week's data is never called seven days of readings.
-export function weightWeek(events, end = Date.now(),timeZone='UTC') {
- const rows = weightTrend(events,end,timeZone), latest = rows.at(-1);
- if(!latest)return {latest:null,gramsPerDay:null,coveredDays:0,gain:null,first:null};
- const latestTime=Date.parse(latest.at);
- const calendarDays=!!latest.date_only||rows.some(e=>e.date_only&&Date.parse(e.at)>=latestTime-7*86400000);
- const stamp=e=>calendarDays?Date.parse(calendarDate(e.at,timeZone)):Date.parse(e.at);
- const cutoff=stamp(latest)-7*86400000;
- const first=rows.find(e=>stamp(e)>=cutoff&&stamp(e)<stamp(latest));
- if(!first)return {latest,gramsPerDay:null,coveredDays:0,gain:null,first:null};
- const coveredDays=(stamp(latest)-stamp(first))/86400000;
- const gain=Number(latest.value)-Number(first.value);
- return {latest,first,gain,coveredDays,gramsPerDay:gain/coveredDays,calendarDays};
+// Daily means and an equally weighted linear trend over seven calendar dates.
+export function weightWeek(events,end=Date.now(),timeZone='UTC'){
+ return dailyWeightTrend(weightTrend(events,end,timeZone),timeZone);
 }

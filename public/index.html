@@ -37,7 +37,7 @@
 <section id="growth" class="view" hidden>
  <div class="section-title"><h2>Weight tracker</h2><button data-add="weight" class="primary"><span data-icon="plus" aria-hidden="true"></span> Add weight</button></div>
  <label for="weight-scale-filter">Compare scale</label><select id="weight-scale-filter"><option value="*">All scales</option></select><p id="scale-comparison-note" class="subtle"></p><div id="weight-summary" class="weight-summary"></div><div id="weight-chart"></div>
- <p class="subtle">The 7-day average uses the first and latest weigh-ins within the week ending at the latest measurement, divided by their actual gap. The number of covered days is shown. Calendar days in the configured timezone are used when exact times are unrecorded. Different scales, clothes and timing can change readings. This is an observed trend, not an assessment of growth.</p>
+ <p class="subtle">The 7-day trend averages all weigh-ins within each local calendar day, then fits a straight line through the daily averages over seven dates ending at the latest weigh-in. Each recorded day has equal weight; missing days are left empty. Individual readings and scale colours remain visible. Mixing scales, clothing and feeding times can still affect the result.</p>
  <div id="weights" class="weight-list"></div>
 </section>
 <section id="trends" class="view" hidden><h2>Day by day</h2><p class="subtle" id="trends-zone"></p><div id="daily"></div></section>
