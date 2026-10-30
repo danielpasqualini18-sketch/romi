@@ -306,3 +306,5 @@ Daily-use tools: the last-activity strip shows elapsed time and breast side. New
 Weigh-ins support optional naked/clothed conditions. Weighted-feed mode stores before/after grams together and displays the gram difference without estimating milk volume. These records remain in the activity timeline and backups but are excluded from growth readings and trends.
 
 Weight / Weighted feed uses a mode switch. Ordinary weight retains scale and optional naked/clothed choices. Weighted feed shows only before/after grams and the calculated difference; it saves a separate timeline entry at the logging time, excluded from growth and breastfeed totals.
+
+Weighted feeds can optionally link to an already logged breastfeed. The session displays approximate transfer in ml using 1 g ≈ 1 ml; before/after grams are preserved. Negative differences have no volume estimate. If multiple measurements link to one session, its latest weighted measurement is displayed, never summed. Deleting/unlinking the weighted entry removes that estimate. Linking does not add another feed or change bottle/EBM totals.
