@@ -14,7 +14,7 @@ export function validate(e,timeZone='UTC') {
  if (e.type === 'weight' && !(value > 0)) throw Error('Enter weight in grams');
  if (!['','formula','ebm'].includes(e.milk || '')) throw Error('Invalid milk type');
  if (!['','small','medium','heavy'].includes(e.wet_size || '')) throw Error('Invalid wet nappy size');
- if (!['','small','big'].includes(e.poo_size || '')) throw Error('Invalid stool size');
+ if (!['','small','medium','big'].includes(e.poo_size || '')) throw Error('Invalid stool size');
  if (e.type==='vomit' && !['small','big'].includes(e.vomit_size)) throw Error('Choose small or large spit-up');
  if (typeof e.notes !== 'string' || e.notes.length > 2000) throw Error('Notes must be under 2,000 characters');
  if (!['','left','right','both','comfort'].includes(e.side || '')) throw Error('Invalid breast side');
@@ -26,13 +26,13 @@ export function validate(e,timeZone='UTC') {
  return {...durations,weight_context,scale:scaleName(e),id:e.id, at:new Date(e.at).toISOString(), type:e.type, value, side:e.side||'', wet:e.type==='nappy'&&e.wet?1:0, poo:e.type==='nappy'&&e.poo?1:0, notes:e.notes, date_only:e.type==='weight'&&e.date_only?1:0, vomit_size:e.type==='vomit'?e.vomit_size:'', milk:e.type==='bottle'?e.milk||'':'', wet_size:e.type==='nappy'&&e.wet?e.wet_size||'':'', poo_size:e.type==='nappy'&&e.poo?e.poo_size||'':'', revision:Number.isInteger(e.revision)&&e.revision>0?e.revision:0};
 }
 export function totals(events) {
- const t = {breastSeconds:0,timedBreast:0,breast:0,bottles:0,bottleMl:0,unknownBottles:0,pumps:0,pumpMl:0,unknownPumps:0,wet:0,poo:0,nappies:0,formulaMl:0,ebmMl:0,unspecifiedMl:0,wetSmall:0,wetMedium:0,wetHeavy:0,wetUnspecified:0,pooSmall:0,pooBig:0,pooUnspecified:0,vomit:0,vomitSmall:0,vomitBig:0};
+ const t = {breastSeconds:0,timedBreast:0,breast:0,bottles:0,bottleMl:0,unknownBottles:0,pumps:0,pumpMl:0,unknownPumps:0,wet:0,poo:0,nappies:0,formulaMl:0,ebmMl:0,unspecifiedMl:0,wetSmall:0,wetMedium:0,wetHeavy:0,wetUnspecified:0,pooSmall:0,pooMedium:0,pooBig:0,pooUnspecified:0,vomit:0,vomitSmall:0,vomitBig:0};
  for (const e of events) {
   if (e.type==='vomit') {t.vomit++;t[e.vomit_size==='small'?'vomitSmall':'vomitBig']++;}
   if (e.type==='breast') {t.breast++;if(e.duration_seconds!=null){t.timedBreast++;t.breastSeconds+=Number(e.duration_seconds);}}
   if (e.type==='bottle') { t.bottles++; if(e.value==null)t.unknownBottles++;else {t.bottleMl+=Number(e.value);t[e.milk==='formula'?'formulaMl':e.milk==='ebm'?'ebmMl':'unspecifiedMl']+=Number(e.value);} }
   if (e.type==='pump') { t.pumps++;if(e.value==null)t.unknownPumps++;else t.pumpMl+=Number(e.value); }
-  if (e.type==='nappy') {t.nappies++;t.wet+=Number(!!e.wet);t.poo+=Number(!!e.poo);if(e.wet)t[{small:'wetSmall',medium:'wetMedium',heavy:'wetHeavy'}[e.wet_size]||'wetUnspecified']++;if(e.poo)t[{small:'pooSmall',big:'pooBig'}[e.poo_size]||'pooUnspecified']++;}
+  if (e.type==='nappy') {t.nappies++;t.wet+=Number(!!e.wet);t.poo+=Number(!!e.poo);if(e.wet)t[{small:'wetSmall',medium:'wetMedium',heavy:'wetHeavy'}[e.wet_size]||'wetUnspecified']++;if(e.poo)t[{small:'pooSmall',medium:'pooMedium',big:'pooBig'}[e.poo_size]||'pooUnspecified']++;}
  }
  return t;
 }

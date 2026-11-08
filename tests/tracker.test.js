@@ -148,3 +148,11 @@ test('weigh-in conditions persist and weighted feeds stay out of growth calculat
  const {weightWeek,weightTrend}=await import('../public/model.js');const env=environment();const record=make('weight',undefined,{value:4000,weight_context:JSON.stringify({mode:'weighted-feed',clothing:'naked',after:4030})});
  assert.equal((await worker.fetch(req('/api/events','POST',record),env)).status,200);const rows=(await(await worker.fetch(req('/api/events'),env)).json()).events;assert.equal(JSON.parse(rows[0].weight_context).after,4030);assert.equal(weightTrend(rows).length,0);assert.equal(weightWeek(rows).latest,null);assert.throws(()=>validate({...record,weight_context:JSON.stringify({mode:'weighted-feed',after:0})}));
 });
+
+test('medium dirty nappies persist through create, edit and backup restore and count once',async()=>{
+ const env=environment(),record=make('nappy',undefined,{wet:1,wet_size:'medium',poo:1,poo_size:'medium'});
+ assert.equal((await worker.fetch(req('/api/events','POST',record),env)).status,200);
+ let row=(await(await worker.fetch(req('/api/events'),env)).json()).events[0];assert.equal(row.poo_size,'medium');let counts=totals([row]);assert.equal(counts.pooMedium,1);assert.equal(counts.pooUnspecified,0);assert.equal(counts.poo,1);assert.equal(counts.nappies,1);assert.equal(counts.wetMedium,1);
+ assert.equal((await worker.fetch(req('/api/events/'+row.id,'PUT',{...row,poo_size:'big'}),env)).status,200);row=(await(await worker.fetch(req('/api/events'),env)).json()).events[0];assert.equal(row.poo_size,'big');
+ const restored=environment();assert.equal((await worker.fetch(req('/api/events','POST',[record]),restored)).status,200);row=(await(await worker.fetch(req('/api/events'),restored)).json()).events[0];assert.equal(row.poo_size,'medium');
+});
